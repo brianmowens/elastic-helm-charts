@@ -14,9 +14,7 @@ esConfig:
   elasticsearch.yml: |
     node.store.allow_mmap: false
 
-extraEnvs: []
-
-envFrom:
+extraEnvs:
   - name: ELASTIC_PASSWORD
     valueFrom:
       secretKeyRef:
@@ -27,6 +25,8 @@ envFrom:
       secretKeyRef:
         name: elasticsearch-master-credentials
         key: username
+
+envFrom: []
 
 # Permit co-located instances for solitary minikube virtual machines.
 antiAffinity: "soft"
