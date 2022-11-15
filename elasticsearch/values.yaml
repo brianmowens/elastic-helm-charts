@@ -47,9 +47,9 @@ esJvmOptions: {}
 extraEnvs: []
 
 # Allows you to load environment variables from kubernetes secret or config map
-envFrom: 
- - secretRef:
-     name: elastic-credential
+envFrom: []
+# - secretRef:
+#     name: elastic-credential
 # - configMapRef:
 #     name: config-map
 

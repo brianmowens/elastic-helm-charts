@@ -6,13 +6,20 @@ sysctlInitContainer:
 service:
   type: LoadBalancer
 
+secret:
+  enabled: false
+
 # Restrict the use of the memory-mapping when sysctlInitContainer is disabled.
 esConfig:
   elasticsearch.yml: |
     node.store.allow_mmap: false
 
-# Set the elasticsearch username and password.
+
 extraEnvs: []
+
+envFrom: 
+ - secretRef:
+     name: elastic-credential
 
 # Permit co-located instances for solitary minikube virtual machines.
 antiAffinity: "soft"
