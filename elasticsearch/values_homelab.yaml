@@ -16,7 +16,17 @@ esConfig:
 
 extraEnvs: []
 
-envFrom: []
+envFrom:
+  - name: ELASTIC_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-master-credentials
+        key: password
+  - name: ELASTIC_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: elasticsearch-master-credentials
+        key: username
 
 # Permit co-located instances for solitary minikube virtual machines.
 antiAffinity: "soft"
