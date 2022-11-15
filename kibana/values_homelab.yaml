@@ -39,10 +39,10 @@ secretMounts: []
 #    path: /usr/share/kibana/data/kibana.keystore
 #    subPath: kibana.keystore # optional
 
-hostAliases:
-- ip: "192.168.1.152"
-  hostnames:
-  - "elasticsearch-master"
+hostAliases: []
+#- ip: "192.168.1.152"
+#  hostnames:
+#  - "elasticsearch-master"
 
 image: "docker.elastic.co/kibana/kibana"
 imageTag: "8.4.1"
