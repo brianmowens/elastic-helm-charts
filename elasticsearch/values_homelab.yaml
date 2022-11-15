@@ -1,0 +1,45 @@
+---
+# Disable privileged init Container creation.
+sysctlInitContainer:
+  enabled: false
+
+# Restrict the use of the memory-mapping when sysctlInitContainer is disabled.
+esConfig:
+  elasticsearch.yml: |
+    node.store.allow_mmap: false
+
+# Set the elasticsearch username and password.
+extraEnvs:
+  - name: ELASTIC_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: password
+  - name: ELASTIC_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credentials
+        key: username
+
+# Permit co-located instances for solitary minikube virtual machines.
+antiAffinity: "soft"
+
+# Shrink default JVM heap.
+esJavaOpts: "-Xmx128m -Xms128m"
+
+# Allocate smaller chunks of memory per pod.
+resources:
+  requests:
+    cpu: "100m"
+    memory: "512M"
+  limits:
+    cpu: "1000m"
+    memory: "512M"
+
+# Request smaller persistent volumes.
+volumeClaimTemplate:
+  accessModes: [ "ReadWriteOnce" ]
+  storageClassName: "microk8s-hostpath"
+  resources:
+    requests:
+      storage: 100M
