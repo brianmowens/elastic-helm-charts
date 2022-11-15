@@ -45,17 +45,19 @@ esJvmOptions: {}
 # This will be appended to the current 'env:' key. You can use any of the kubernetes env
 # syntax here
 extraEnvs: []
+#  - name: MY_ENVIRONMENT_VAR
+#    value: the_value_goes_here
 
 # Allows you to load environment variables from kubernetes secret or config map
 envFrom: []
 # - secretRef:
-#     name: elastic-credential
+#     name: env-secret
 # - configMapRef:
 #     name: config-map
 
 # Disable it to use your own elastic-credential Secret.
 secret:
-  enabled: false
+  enabled: true
   password: "" # generated randomly if not defined
 
 # A list of secrets and their paths to mount inside the pod
