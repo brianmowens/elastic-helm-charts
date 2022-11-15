@@ -2,7 +2,6 @@
 elasticsearchHosts: "https://elasticsearch-master:9200"
 elasticsearchCertificateSecret: elasticsearch-master-certs
 elasticsearchCertificateAuthoritiesFile: ca.crt
-elasticsearchCredentialSecret: elasticsearch-master-credentials
 
 replicas: 1
 
@@ -12,15 +11,21 @@ replicas: 1
 extraEnvs:
   - name: "NODE_OPTIONS"
     value: "--max-old-space-size=1800"
-#  - name: MY_ENVIRONMENT_VAR
-#    value: the_value_goes_here
+  - name: ELASTICSEARCH_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credential
+        key: ELASTIC_PASSWORD
+  - name: ELASTICSEARCH_USERNAME
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credential
+        key: ELASTIC_USERNAME
 
 # Allows you to load environment variables from kubernetes secret or config map
-envFrom: []
-# - secretRef:
-#     name: env-secret
-# - configMapRef:
-#     name: config-map
+envFrom:
+ - secretRef:
+     name: elastic-credential
 
 # A list of secrets and their paths to mount inside the pod
 # This is useful for mounting certificates for security and for mounting
@@ -31,11 +36,10 @@ secretMounts: []
 #    path: /usr/share/kibana/data/kibana.keystore
 #    subPath: kibana.keystore # optional
 
-hostAliases: []
-#- ip: "127.0.0.1"
-#  hostnames:
-#  - "foo.local"
-#  - "bar.local"
+hostAliases:
+- ip: "192.168.1.152"
+  hostnames:
+  - "elasticsearch-master"
 
 image: "docker.elastic.co/kibana/kibana"
 imageTag: "8.4.1"
