@@ -3,6 +3,9 @@
 sysctlInitContainer:
   enabled: false
 
+service:
+  type: LoadBalancer
+
 # Restrict the use of the memory-mapping when sysctlInitContainer is disabled.
 esConfig:
   elasticsearch.yml: |
