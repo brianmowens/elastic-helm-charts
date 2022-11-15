@@ -4,7 +4,7 @@ sysctlInitContainer:
   enabled: false
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
 
 # Restrict the use of the memory-mapping when sysctlInitContainer is disabled.
 esConfig:
@@ -12,17 +12,7 @@ esConfig:
     node.store.allow_mmap: false
 
 # Set the elasticsearch username and password.
-extraEnvs:
-  - name: ELASTIC_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: elastic-credentials
-        key: password
-  - name: ELASTIC_USERNAME
-    valueFrom:
-      secretKeyRef:
-        name: elastic-credentials
-        key: username
+extraEnvs: []
 
 # Permit co-located instances for solitary minikube virtual machines.
 antiAffinity: "soft"
