@@ -7,7 +7,7 @@ service:
   type: LoadBalancer
 
 secret:
-  enabled: true
+  enabled: false
 
 # Restrict the use of the memory-mapping when sysctlInitContainer is disabled.
 esConfig:
@@ -16,7 +16,18 @@ esConfig:
 
 extraEnvs: []
 
-envFrom: []
+envFrom:
+  - name: ELASTIC_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credential
+        key: password
+  - name: ELASTIC_USER
+    valueFrom:
+      secretKeyRef:
+        name: elastic-credential
+        key: username
+  
 
 # Permit co-located instances for solitary minikube virtual machines.
 antiAffinity: "soft"
